@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}
+    Recipes
+{% endblock title %}
+{% block start %}
+
+{% if recipes|length == 0 %}
+<div class="alert alert-danger text-bold" role="alert">
+  <strong>No Recipes available. Please add some recipes <a href="/recipe/" class="alert-link">here</a></strong>
+</div>
+{% endif %}
+<br>
+<br>
+
+{% include 'card.html' %}
+
+{% if recipes|length != 0 %}
+<div class="mb-3 text-center">
+    <a href='/addrecipe'>
+        <button type="button" class="btn btn-primary btn-lg">Add Recipe</button>
+    </a>
+</div>
+{% endif %}
+
+{% endblock %}

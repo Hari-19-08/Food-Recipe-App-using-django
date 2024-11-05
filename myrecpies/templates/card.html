@@ -1,0 +1,70 @@
+<div class="container py-4">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for recipe in recipes %}
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0">
+          <!-- Recipe Image -->
+          <div class="card-img-top position-relative">
+            <img src="/media/{{ recipe.recipe_image }}" alt="Card image cap" 
+                 class="img-fluid rounded-top" style="height: 250px; object-fit: cover;">
+            <!-- Optional Hover Effect (Overlay) -->
+            <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-0 hover-opacity-50 transition-opacity"></div>
+          </div>
+
+          <!-- Card Body with Details -->
+          <div class="card-body">
+            <!-- Recipe Title -->
+            <h5 class="card-title text-dark">{{ recipe.recipe_name }}</h5>
+            <!-- Recipe Creator Info -->
+            <p class="card-text text-muted">Created by: 
+              <a href="/profile/{{ recipe.user.id }}" class="text-decoration-none text-success">
+                {{ recipe.user.username }}
+              </a>
+            </p>
+
+            <!-- Buttons (Conditional for user-owned recipes) -->
+            <div class="d-flex justify-content-between">
+              <a href="/recipe_detail/{{ recipe.id }}/" class="btn btn-outline-success">View</a>
+
+              {% if recipe.user == request.user %}
+              <div class="btn-group">
+                <a href="/update_recipe/{{ recipe.id }}/" class="btn btn-outline-warning">Edit</a>
+                <a href="/delete_recipe/{{ recipe.id }}/" class="btn btn-outline-danger">Delete</a>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+  .card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .card-img-top .hover-opacity-50 {
+    opacity: 0.5;
+  }
+
+  .card-body h5.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
+  .card-body p.card-text {
+    font-size: 0.9rem;
+  }
+
+  .btn-group .btn {
+    margin-left: 0.5rem;
+  }
+
+  .btn-group .btn:first-child {
+    margin-left: 0;
+  }
+</style>

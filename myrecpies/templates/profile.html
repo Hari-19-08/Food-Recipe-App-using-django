@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    <title>MyRecipes.com</title>
+    <style>
+        .profile-card {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #f8f9fa;
+        }
+        .profile-header {
+            background-color: #0e0103c9;
+            height: 220px;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+            padding-top: 20px;
+        }
+        .profile-img-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-top: -75px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+        .profile-img-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .recent-recipes {
+            background-color: #f8f9fa;
+            padding: 3%;
+        }
+        .btn-custom {
+            background-color: #ce1919;
+            border: none;
+            outline: none;
+            margin-top: 15px;
+            width: 100%;
+        }
+        .btn-custom:hover {
+            background-color: #555;
+        }
+        .btn-custom:focus {
+            box-shadow: none;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .logout-btn:hover {
+            background-color: #c40c0c;
+        }
+    </style>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif;">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+        <div class="container-fluid position-relative">
+            <a class="navbar-brand me-2 d-flex align-items-center" href="/">
+                <img src="/media/image/Logo.png" height="60" width="160" alt="MyRecipes Logo" class="img-fluid" />
+            </a>
+            <ul class="navbar-nav ms-auto d-flex flex-row">
+                <li class="nav-item me-3">
+                    <a class="nav-link" href="/search">
+                        <i class="fas fa-search fa-lg"></i>
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item me-3">
+                    <a class="nav-link" href="/addrecipe">
+                        <i class="fas fa-plus-circle fa-lg"></i>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+
+            {% if user.is_authenticated %}
+            <!-- Logout Button -->
+            <a href="/log_out" class="logout-btn">Logout</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <div class="container py-5">
+        <section class="profile-card bg-white p-4">
+            <div class="profile-header">
+                <div class="profile-img-container" data-bs-toggle="modal" data-bs-target="#profileImageModal">
+                    <!-- Profile Image -->
+                    {% if userdetails.profile_pic %}
+                    <img src="/media/{{userdetails.profile_pic}}" class="img-thumbnail">
+                    {% else %}
+                    <img src="/media/image/Profileimg.png" class="img-thumbnail">
+                    {% endif %}
+                </div>
+                <div class="ms-4">
+                    <h4>{{userdetails.user.username}}</h4>
+                    <p>{{userdetails.user.first_name}} {{userdetails.user.last_name}}</p>
+                    <a href="/update_profile/{{userdetails.id}}" class="btn btn-custom">Edit Profile</a>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="d-flex justify-content-between text-center">
+                    <div>
+                        <h5 class="mb-0">{{recipe_count}}</h5>
+                        <small class="text-muted">Recipes</small>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4">
+                <p class="lead fw-bold mb-3">About</p>
+                <div class="bg-light p-3 rounded">
+                    <p class="mb-0">{{userdetails.bio}}</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Profile Image Modal -->
+    <div class="modal fade" id="profileImageModal" tabindex="-1" aria-labelledby="profileImageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="{% if userdetails.profile_pic %}/media/{{userdetails.profile_pic}}{% else %}/media/image/Profileimg.png{% endif %}" class="img-fluid" alt="Profile Picture">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Recipes Section -->
+    <div class="recent-recipes">
+        <h2 class="text-center mb-4">Recent Recipes</h2>
+        {% include 'card.html' %}
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

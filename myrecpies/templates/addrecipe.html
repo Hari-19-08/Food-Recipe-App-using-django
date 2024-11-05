@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}
+    Add Recipe
+{% endblock title %}
+
+{% block start %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <form class="p-5 shadow rounded" method="POST" enctype="multipart/form-data" style="background-color: #ffffff;">
+                {% csrf_token %}
+                <h2 class="text-center mb-4" style="color: #4e73df; font-weight: 600;">ADD RECIPE</h2>
+                <hr class="mb-4">
+
+                <!-- Recipe Form -->
+                <fieldset>
+                    <legend class="visually-hidden">Recipe Information</legend>
+
+                    <!-- Recipe Name -->
+                    <div class="mb-4">
+                        <label for="recipeName" class="form-label"><h5>Recipe Name</h5></label>
+                        <input id="recipeName" name="recipe_name" type="text" class="form-control" placeholder="Enter the Recipe Name" required>
+                    </div>
+
+                    <!-- Ingredients -->
+                    <div class="mb-4">
+                        <label for="recipeIngredients" class="form-label"><h5>Ingredients</h5></label>
+                        <textarea id="recipeIngredients" class="form-control" name="recipe_ingridents" rows="4" placeholder="List all ingredients" required></textarea>
+                    </div>
+
+                    <!-- Recipe Description -->
+                    <div class="mb-4">
+                        <label for="recipeDescription" class="form-label"><h5>Description</h5></label>
+                        <textarea id="recipeDescription" class="form-control" name="recipe_description" rows="4" placeholder="Briefly describe the recipe" required></textarea>
+                    </div>
+
+                    <!-- Instructions -->
+                    <div class="mb-4">
+                        <label for="instructions" class="form-label"><h5>Instructions</h5></label>
+                        <textarea id="instructions" class="form-control" name="instructions" rows="5" placeholder="Step-by-step instructions" required></textarea>
+                    </div>
+
+                    <!-- Cooking Time -->
+                    <div class="mb-4">
+                        <label for="cookingTime" class="form-label"><h5>Cooking Time</h5></label>
+                        <input id="cookingTime" name="cooking_time" type="text" class="form-control" placeholder="e.g., 45 minutes" required>
+                    </div>
+
+                    <!-- Recipe Image -->
+                    <div class="mb-4">
+                        <label for="recipeImage" class="form-label"><h5>Recipe Image</h5></label>
+                        <input id="recipeImage" type="file" name="recipe_image" class="form-control">
+                    </div>
+                </fieldset>
+
+                <!-- Submit Button -->
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="submit" class="btn btn-primary btn-lg"><h4>Add Recipe</h4></button>
+                </div>
+            </form>
+
+            <!-- View Recipes Button -->
+            <div class="text-center mt-5">
+                <a href="/viewrecipe/" class="btn btn-secondary btn-lg">View Recipes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+    body {
+        background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+        font-family: 'Poppins', sans-serif;
+        color: #343a40;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #4e73df;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 15px;
+        font-size: 1.1rem;
+        border: 1px solid #ced4da;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #4e73df;
+        box-shadow: 0 0 8px rgba(78, 115, 223, 0.25);
+    }
+
+    .btn-primary {
+        background-color: #4e73df;
+        border-color: #4e73df;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #3751b6;
+        border-color: #3751b6;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background-color: #858796;
+        border-color: #858796;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        transform: translateY(-2px);
+    }
+
+    .shadow {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    hr {
+        border-top: 1px solid #e3e6f0;
+    }
+
+    .container {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+    }
+</style>
+
+{% endblock %}
